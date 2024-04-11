@@ -2,7 +2,7 @@ import '../css-designs/login.css';
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
 import axios from 'axios';
 import SignUp from "./SignUp";
 import { CenterFocusStrong } from '@mui/icons-material';
@@ -21,19 +21,33 @@ function Login() {
       <div className='container'>
         <div className='login form'>
           <header>Login Form</header>
-        </div>
-        <Box
+          <Stack
       component="form"
       sx={{
-        '& > :not(style)': { m: 1, width: '25ch' },
+        width: '35ch',
       }}
+      spacing={4}
       noValidate
       autoComplete="off"
     >
-      <TextField id="outlined-basic" label="UserName" variant="outlined" />
-      <TextField id="outlined-basic" label="Password" variant="filled" />
-      
-    </Box>
+      <TextField
+        hiddenLabel
+        id="filled-hidden-label-small"
+        placeholder="Username"
+        variant="filled"
+      />
+      <TextField
+        hiddenLabel
+        id="filled-hidden-label-normal"
+                type="password"
+                placeholder="password"
+        variant="filled"
+      />
+<Button variant="outlined">Login</Button>
+      <Button variant="outlined"><a href='/signup'>Sign-up</a></Button>
+    </Stack>
+        </div>
+   
          
         </div>
     </div>
