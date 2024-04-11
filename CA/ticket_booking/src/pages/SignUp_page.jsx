@@ -1,7 +1,5 @@
-import logo from './logo.svg';
-import './App.css';
 import {useEffect, useState} from 'react'
-import Login from './component/Loginfield';
+import SignUp from '../components/SignUp';
 
 
 
@@ -11,7 +9,7 @@ function App() {
 
   return (
     <div className="App">
-      <Login/>
+      <SignUp/>
     </div>
   );
 }
