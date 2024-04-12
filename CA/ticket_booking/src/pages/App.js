@@ -41,7 +41,7 @@ const Admin_Page = () => {
 
 const App = () => {
   let routes = useRoutes([
-    { path: "/", element: <Error_Page /> },
+    { path: "/", element: <Login_page /> },
     { path: "/login", element: <Login_page /> },
     { path: "/signup", element: <SignUp_Page /> },
     { path: "/movies", element: <Movies_Page /> },
