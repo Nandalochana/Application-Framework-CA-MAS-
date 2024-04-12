@@ -28,7 +28,9 @@ export default function ComplexGrid() {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="complex" src="https://st3.depositphotos.com/3591429/12874/i/450/depositphotos_128744154-stock-photo-open-laptop-computer.jpg" />
+            <a href='/movieinfo'>
+            <Img alt="complex" src="https://spotlightonline.co/wp-content/uploads/2017/03/cinema_projector-1024x683.jpg" />
+            </a>
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
@@ -46,7 +48,7 @@ export default function ComplexGrid() {
             </Grid>
             <Grid item>
               <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                Remove
+              <a href='/movieinfo'>See Info</a>
               </Typography>
             </Grid>
           </Grid>
@@ -58,23 +60,25 @@ export default function ComplexGrid() {
         </Grid>
       </Grid>
 
-      <Divider>CENTER</Divider>
+      <Divider>---</Divider>
 
 
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="complex" src="https://st3.depositphotos.com/3591429/12874/i/450/depositphotos_128744154-stock-photo-open-laptop-computer.jpg" />
+          <a href='/movieinfo'>
+            <Img alt="complex" src="https://spotlightonline.co/wp-content/uploads/2017/03/cinema_projector-1024x683.jpg" />
+            </a>
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
             <Grid item xs>
               <Typography gutterBottom variant="subtitle1" component="div">
-                Standard license
+           MovieInfo Comes Here
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Full resolution 1920x1080 • JPEG
+                 Details Here
               </Typography>
               <Typography variant="body2" color="text.secondary">
                 ID: 1030114
@@ -82,24 +86,26 @@ export default function ComplexGrid() {
             </Grid>
             <Grid item>
               <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                Remove
+              <a href='/movieinfo'>See Info</a>
               </Typography>
             </Grid>
           </Grid>
           <Grid item>
             <Typography variant="subtitle1" component="div">
-              $19.00
+               Price : $19.00
             </Typography>
           </Grid>
         </Grid>
       </Grid>
 
- <Divider>CENTER</Divider>
+ <Divider>---</Divider>
 
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="complex" src="https://st3.depositphotos.com/3591429/12874/i/450/depositphotos_128744154-stock-photo-open-laptop-computer.jpg" />
+          <a href='/movieinfo'>
+            <Img alt="complex" src="https://spotlightonline.co/wp-content/uploads/2017/03/cinema_projector-1024x683.jpg" />
+            </a>
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
@@ -117,7 +123,7 @@ export default function ComplexGrid() {
             </Grid>
             <Grid item>
               <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                Remove
+                <a href='/movieinfo'>See Info</a>
               </Typography>
             </Grid>
           </Grid>
@@ -130,7 +136,7 @@ export default function ComplexGrid() {
       </Grid>
 
 
-      <Divider>CENTER</Divider>
+      <Divider></Divider>
 
     </Paper>
   );

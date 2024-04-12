@@ -43,12 +43,10 @@ function Login() {
                 placeholder="password"
         variant="filled"
       />
-<Button variant="outlined">Login</Button>
+      <Button variant="outlined"><a href='/movies'>Login</a></Button>
       <Button variant="outlined"><a href='/signup'>Sign-up</a></Button>
     </Stack>
         </div>
-   
-         
         </div>
     </div>
   );
