@@ -43,7 +43,7 @@ function Login() {
                 placeholder="password"
         variant="filled"
       />
-      <Button variant="outlined"><a href='/movies'>Login</a></Button>
+      <Button variant="outlined" onClick={sendRequest}>Log In</Button>
       <Button variant="outlined"><a href='/signup'>Sign-up</a></Button>
     </Stack>
         </div>

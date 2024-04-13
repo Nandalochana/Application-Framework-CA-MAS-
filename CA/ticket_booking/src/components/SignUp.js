@@ -3,21 +3,39 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import { useState } from "react";
 import axios from 'axios';
 import { useNavigate } from 'react-router'
 
-function Signup() {
-  const navigate = useNavigate()
-  navigate(0)
-  const sendRequest = async () => {
+
+const Signup = () =>  {
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+    fullname:"",
+    address:""
+  });
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setData({
+      ...data,
+      [e.target.name]: value
+    });
+    console.log(e.target.name,value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
     const headers = {
       "Content-Type": "application/json"
     };
-    const url = "http://localhost:3000/SignUp";
 
-    axios.get(url, { headers });
-  }
-
+    axios.post("http://localhost:3000/Signup",data,{ headers } ).then((response) => {
+      console.log(response.status, response.data.token,response);
+    });
+  };
+  
   return (
     <div>
       <div className='container'>
@@ -32,12 +50,12 @@ function Signup() {
       noValidate
       autoComplete="off"
     >
-      <TextField id="outlined-basic" label="Full Name" variant="outlined" />
-      <TextField id="outlined-basic" label="Email" variant="outlined" />
-      <TextField id="filled-basic" label="Password"  type="password" variant="filled" />
-      <TextField id="outlined-basic" label="Address" variant="outlined" />
+      <TextField id="outlined-basic"  name= "fullname" label="fullname" variant="outlined"  onChange={handleChange}/>
+      <TextField id="outlined-basic" name= "email" label="email" variant="outlined" onChange={handleChange}/>
+      <TextField id="filled-basic" name = "password" label="password"  type="password" variant="filled" onChange={handleChange} />
+      <TextField id="outlined-basic" name = "address" label="address" variant="outlined" onChange={handleChange}/>
       <Button variant="outlined"><a href='/Login'>Login</a></Button>
-      <Button variant="outlined">Sign-up</Button>
+      <Button variant="outlined" onClick={handleSubmit}>Sign-up</Button>
     </Box>
          
         </div>
