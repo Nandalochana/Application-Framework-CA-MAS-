@@ -1,15 +1,36 @@
-// Importing the module 
-const express=require("express") 
-const router=express.Router() 
-const config = require('./Configuration/DB_Connection_SearchOne_Config.js');
-const { json } = require("body-parser");
-  
-// Handling login request 
-router.get("/",(req,res,next)=>{ 
+const { MongoClient } = require("mongodb");
+const uri = "mongodb://127.0.0.1:27017";
+const client = new MongoClient(uri);
+const database = client.db('moviebooking');
+var express=require("express") 
+var app = express()
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
 
-console.log(`fire login-server`);
-let value = config.searchQuery({ title: 'Back to the Future' })
-console.log(value)
-res.send("This is the login request") 
-}) 
-module.exports=router
+app.post("/Login", async function async (req, res) {
+  const results = await searchQuery(req);
+  res.send(JSON.stringify(results)).status(200);
+  });
+
+ async function searchQuery(req){
+        try {
+          const movies = database.collection('User_Info');
+           let results = await movies.find().toArray();
+           for(var item of results) {
+            if(item.email == req.body.email && item.password ==req.body.password){
+              console.log('if : ', [item._id]);
+              return item;
+            }
+            else{
+              console.log('else : ', [item._id]);
+            }
+         }
+         return "No values Found";
+        }
+         finally {
+          //await client.close();
+        }
+      
+}
+
+module.exports = app;

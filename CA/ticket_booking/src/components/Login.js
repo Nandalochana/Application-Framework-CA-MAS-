@@ -4,18 +4,47 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';
-import SignUp from "./SignUp";
-import { CenterFocusStrong } from '@mui/icons-material';
+import { useState } from "react";
 
-function Login() {
-  const sendRequest = async () => {
-    const headers = {
-      "Content-Type": "application/json"
-    };
-    const url = "http://localhost:3000/Login";
 
-    axios.get(url, { headers });
-  }
+const Login = () =>  {
+  const [data, setData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setData({
+      ...data,
+      [e.target.name]: value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+      const headers = {
+        "Content-Type": "application/json"
+      };
+      try {
+        console.log(data)
+      await axios.post("http://localhost:3000/Login",data,{ headers } ).then((response) => {
+        if(response.status == 200){
+          if(response.data!=null){
+              if(response.data.email!=null){
+                console.log(response.status, response.data.token,response);
+                window.location.href = "/movies"; 
+
+              }
+          }
+        }
+       
+      });
+    } catch (error) {
+      console.log(error);
+    }
+    };;
+
   return (
     <div>
       <div className='container'>
@@ -33,17 +62,17 @@ function Login() {
       <TextField
         hiddenLabel
         id="filled-hidden-label-small"
-        placeholder="Username"
-        variant="filled"
+        placeholder="Username" name= "email"
+        variant="filled" onChange={handleChange}
       />
       <TextField
         hiddenLabel
         id="filled-hidden-label-normal"
-                type="password"
-                placeholder="password"
+                type="password" name= "password"
+                placeholder="password" onChange={handleChange}
         variant="filled"
       />
-      <Button variant="outlined" onClick={sendRequest}>Log In</Button>
+      <Button variant="outlined"  onClick={handleSubmit}>Log In</Button>
       <Button variant="outlined"><a href='/signup'>Sign-up</a></Button>
     </Stack>
         </div>
