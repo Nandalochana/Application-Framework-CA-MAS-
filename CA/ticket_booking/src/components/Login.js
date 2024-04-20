@@ -27,14 +27,12 @@ const Login = () =>  {
         "Content-Type": "application/json"
       };
       try {
-        console.log(data)
       await axios.post("http://localhost:3000/Login",data,{ headers } ).then((response) => {
         if(response.status == 200){
           if(response.data!=null){
               if(response.data.email!=null){
                 console.log(response.status, response.data.token,response);
                 window.location.href = "/movies"; 
-
               }
           }
         }

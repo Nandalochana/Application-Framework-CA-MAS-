@@ -25,15 +25,25 @@ const Signup = () =>  {
     console.log(e.target.name,value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const headers = {
       "Content-Type": "application/json"
     };
 
-    axios.post("http://localhost:3000/Signup",data,{ headers } ).then((response) => {
-      console.log(response.status, response.data.token,response);
-    });
+    try {
+      await axios.post("http://localhost:3000/Signup",data,{ headers } ).then((response) => {
+        if(response.status == 200){
+          if(response.data!=null){
+                console.log(response.status, response.data.token,response);
+                window.location.href = "/movies";
+          }
+        }
+       
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   
   return (

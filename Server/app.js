@@ -15,7 +15,7 @@ const signuproute=require("./routes/Signup_Route")
 // Load the /posts routes
 app.post("/Login", loginroute);
 
-app.use("/Signup", signuproute); 
+app.post("/Signup", signuproute); 
 //Creates our express server
 const port = 3000;
 app.set('port', port);
