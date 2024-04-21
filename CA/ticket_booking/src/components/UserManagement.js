@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useEffect } from 'react';
 import { Stack } from '@mui/material';
 
-const MovieAdmin = () => {
+const UserManagement = () => {
 
   const columns = [
     { field: '_id', headerName: 'ID', width: 130,  hide: true, columnVisibilityModel: {
@@ -18,13 +18,10 @@ const MovieAdmin = () => {
       traderName: false,
       hide: true
     }, },
-    { field: 'movieName', headerName: 'Movie Name', width: 150 },
-    { field: 'date', headerName: 'Date', width: 130 },
-    { field: 'time', headerName: 'Time', width: 130 },
-    { field: 'maxcount', headerName: 'Max-Count', width: 100 },
-    { field: 'location', headerName: 'Location', width: 100 },
-    { field: 'price', headerName: 'Ticket-Price', width: 100 },
-    { field: 'img', headerName: 'Cover Photo', width: 100 },
+    { field: 'fullName', headerName: 'FullName', width: 150 },
+    { field: 'email', headerName: 'Email', width: 130 },
+    { field: 'password', headerName: 'Password', width: 130 },
+    { field: 'address', headerName: 'address', width: 100 },
     {
       field: 'action',
       headerName: 'Action',
@@ -37,7 +34,7 @@ const MovieAdmin = () => {
           const currentRow = params.row;
           try {
             const params = { id: currentRow._id };
-            await axios.delete("http://localhost:3000/MovieDelete", { params }).then((response) => {
+            await axios.delete("http://localhost:3000/UserDelete", { params }).then((response) => {
               if (response.status == 200) {
                 if (response.data != null) {
                   movieLoad();
@@ -59,13 +56,10 @@ const MovieAdmin = () => {
             setData({
               ...data,
               myId: currentRow._id,
-              movieName: currentRow.movieName,
-              date: currentRow.date,
-              time: currentRow.time,
-              location: currentRow.location,
-              maxcount: currentRow.maxcount,
-              price:currentRow.price,
-              img:currentRow.img
+              fullName: currentRow.fullName,
+              email: currentRow.email,
+              password: currentRow.password,
+              address: currentRow.address
             });
 
 
@@ -92,13 +86,10 @@ const MovieAdmin = () => {
 
   const [loadInfo, setInfo] = useState({
     myId: "",
-    movieName: "",
-    date: "",
-    time: "",
-    location: "",
-    maxcount: "",
-    price:"",
-    img:""
+    fullName: "",
+    email: "",
+    password: "",
+    address: ""
   });
 
 
@@ -107,13 +98,10 @@ const MovieAdmin = () => {
 
   const [data, setData] = useState({
     myId: "",
-    movieName: "",
-    date: "",
-    time: "",
-    location: "",
-    maxcount: "",
-    price:"",
-    img:""
+    fullName: "",
+    email: "",
+    password: "",
+    address: ""
   });
 
   const handleChange = (e) => {
@@ -131,20 +119,17 @@ const MovieAdmin = () => {
     };
 
     try {
-      await axios.post("http://localhost:3000/MovieAdd", data, { headers }).then((response) => {
+      await axios.post("http://localhost:3000/UserAdd", data, { headers }).then((response) => {
         if (response.status == 200) {
           if (response.data != null) {
             //console.log(response.status, response.data.token,response);
             setData({
               ...data,
               myId: "",
-              movieName: "",
-              date: "",
-              time: "",
-              location: "",
-              maxcount: "",
-              price:"",
-              img:""
+              fullName: "",
+              email: "",
+              password: "",
+              address: ""
             });
             setTableData(response.data);
 
@@ -164,7 +149,7 @@ const MovieAdmin = () => {
     };
 
     try {
-      await axios.post("http://localhost:3000/MovieLoad", loadInfo, { headers }).then((response) => {
+      await axios.post("http://localhost:3000/UserLoad", loadInfo, { headers }).then((response) => {
         if (response.status == 200) {
           if (response.data != null) {
             //console.log(response.data);
@@ -189,20 +174,17 @@ const MovieAdmin = () => {
 
     try {
       console.log(data)
-      await axios.put("http://localhost:3000/MovieUpdate", data, { headers }).then((response) => {
+      await axios.put("http://localhost:3000/UserUpdate", data, { headers }).then((response) => {
         if (response.status == 200) {
           if (response.data != null) {
             //console.log(response.status, response.data.token,response);
             setData({
               ...data,
               myId: "",
-              movieName: "",
-              date: "",
-              time: "",
-              location: "",
-              maxcount: "",
-              price:"",
-              img:""
+              fullName: "",
+              email: "",
+              password: "",
+              address: ""
             });
             setTableData(response.data);
 
@@ -231,67 +213,40 @@ const MovieAdmin = () => {
           <div>
 
             <TextField
-              name="movieName"
-              id="moviename"
-              label="movieName"
-              value={data.movieName || ""}
-              placeholder="movieName" onChange={handleChange}
+              name="fullName"
+              id="fullName"
+              label="fullName"
+              value={data.fullName || ""}
+              placeholder="fullName" onChange={handleChange}
             />
 
             <TextField
-              name="date"
-              id="date"
-              value={data.date || ""}
-              type='date'
-              placeholder="Date" onChange={handleChange}
+              name="email"
+              id="email"
+              value={data.email || ""}
+              type='email'
+              placeholder="email" onChange={handleChange}
             />
 
             <TextField
-              name="time"
-              id="time"
-              value={data.time || ""}
-              type='time'
+              name="password"
+              id="password"
+              value={data.password || ""}
+              type='password'
               onChange={handleChange}
             />
 
             <TextField
-              name="location"
-              id="location"
-              label="location"
-              value={data.location || ""}
+              name="address"
+              id="address"
+              label="address"
+              value={data.address || ""}
               onChange={handleChange}
             />
-
-            <TextField
-              name="maxcount"
-              id="maxcount"
-              label="maxcount"
-              type='number'
-              value={data.maxcount || ""}
-              placeholder="Max-Count" onChange={handleChange}
-            />
-
-<TextField
-              name="price"
-              id="price"
-              label="price"
-              type='number'
-              value={data.price || ""}
-              placeholder="Ticket-Price" onChange={handleChange}
-            />
-
-<TextField
-              name="img"
-              id="img"
-              label="img"
-              value={data.img || ""}
-              placeholder="Image Url" onChange={handleChange}
-            />
-
 
             <Stack direction="row" spacing={4}>
-              <Button variant="outlined" onClick={handleSubmit} >Register a Movie</Button>
-              <Button variant="outlined" onClick={handleSubmitUpdate} >Update Movie Info</Button>
+              <Button variant="outlined" onClick={handleSubmit} >Register a User</Button>
+              <Button variant="outlined" onClick={handleSubmitUpdate} >Update User Info</Button>
             </Stack>
 
           </div>
@@ -317,9 +272,9 @@ const MovieAdmin = () => {
   );
 }
 
-export default function Comopnent_Admin() {
-  return (<div className="Comopnent_Admin">
+export default function Comopnent_UserManagement() {
+  return (<div className="Comopnent_UserManagement">
 
-    <MovieAdmin />
+    <UserManagement />
   </div>);
 }

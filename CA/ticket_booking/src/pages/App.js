@@ -10,6 +10,7 @@ import Comopnent_movies from "../components/Movies";
 import Comopnent_MovieInfo from "../components/MovieInfo";
 import Comopnent_History from "../components/History";
 import Comopnent_Admin from "../components/admin";
+import Comopnent_UserManagement from "../components/UserManagement";
 
 const Login_page = () => {
   return  <Comopnent_Login/>;
@@ -39,6 +40,10 @@ const Admin_Page = () => {
   return <Comopnent_Admin/>;
 };
 
+const UserManagement_Page = () => {
+  return <Comopnent_UserManagement/>;
+};
+
 const App = () => {
   let routes = useRoutes([
     { path: "/", element: <Login_page /> },
@@ -48,6 +53,7 @@ const App = () => {
     { path: "/movieinfo", element: <Movie_Page /> },
     { path: "/history", element: <History_Page /> },
     { path: "/admin", element: <Admin_Page /> },
+    { path: "/user", element: <UserManagement_Page /> },
   ]);
   return routes;
 };
