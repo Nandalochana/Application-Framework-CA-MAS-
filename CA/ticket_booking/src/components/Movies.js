@@ -43,6 +43,7 @@ const Movie_Filter = () => {
 
   const [data, setData] = useState({
     myId: "",
+    _id:"",
     movieName: "",
     date: "",
     time: "",
@@ -64,14 +65,12 @@ const Movie_Filter = () => {
     };
 
     try {
-      console.log("9999999" + JSON.stringify(filterValuesForGrid))
+      var value = window.sessionStorage.getItem("email");
       await axios.post("http://localhost:3000/MovieFilter", filterValuesForGrid, { headers }).then((response) => {
         if (response.status == 200) {
           if (response.data != null) {
-            console.log(response.data);
             setData(response.data);
             setIsLoading(false);
-
           }
         }
 
@@ -177,13 +176,12 @@ const Movie_Filter = () => {
       {renderComponent()}
     </div>
   );
-
-
-
-
-
 }
 
+
+async function movieInfo(id) {
+  
+};
 
 
 const MyRepeatedComponent = ({ item }) => {
@@ -201,7 +199,7 @@ const MyRepeatedComponent = ({ item }) => {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <a href='/movieinfo'>
+            <a href={'/movieinfo?id='+item._id}>
               <Img alt="complex" src={item.img} />
             </a>
           </ButtonBase>
@@ -222,7 +220,7 @@ const MyRepeatedComponent = ({ item }) => {
             </Grid>
             <Grid item>
               <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                <a href='/movieinfo?id='{...item._myId}>See Info</a>
+                <a href={'/movieinfo?id='+item._id}>See Info</a>
               </Typography>
             </Grid>
           </Grid>
