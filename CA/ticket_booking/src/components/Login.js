@@ -27,7 +27,12 @@ const Login = () =>  {
         "Content-Type": "application/json"
       };
       try {
-      await axios.post("http://localhost:3000/Login",data,{ headers } ).then((response) => {
+      await axios.get("http://localhost:3000/Login",{
+        params: {
+          email: data.email,
+          password: data.password
+        }
+      },{ headers } ).then((response) => {
         if(response.status == 200){
           if(response.data!=null){
               if(response.data.email!=null){

@@ -10,11 +10,6 @@ import { useEffect } from 'react';
 import { Hidden, Stack } from '@mui/material';
 import { Visibility } from '@mui/icons-material';
 
-//const rows =[];
-//const rows = [
-// { id:10, movieName: "100", date: 'Snow', time: 'Jon', location: 35, maxcount:"10"},
-//];
-
 
 const MovieAdmin = () => {
 
@@ -30,6 +25,8 @@ const MovieAdmin = () => {
     { field: 'time', headerName: 'Time', width: 130 },
     { field: 'maxcount', headerName: 'Max-Count', width: 100 },
     { field: 'location', headerName: 'Location', width: 100 },
+    { field: 'price', headerName: 'Ticket-Price', width: 100 },
+    { field: 'img', headerName: 'Cover Photo', width: 100 },
     {
       field: 'action',
       headerName: 'Action',
@@ -68,7 +65,9 @@ const MovieAdmin = () => {
               date: currentRow.date,
               time: currentRow.time,
               location: currentRow.location,
-              maxcount: currentRow.maxcount
+              maxcount: currentRow.maxcount,
+              price:currentRow.price,
+              img:currentRow.img
             });
 
 
@@ -99,7 +98,9 @@ const MovieAdmin = () => {
     date: "",
     time: "",
     location: "",
-    maxcount: ""
+    maxcount: "",
+    price:"",
+    img:""
   });
 
 
@@ -112,7 +113,9 @@ const MovieAdmin = () => {
     date: "",
     time: "",
     location: "",
-    maxcount: ""
+    maxcount: "",
+    price:"",
+    img:""
   });
 
   const handleChange = (e) => {
@@ -141,7 +144,9 @@ const MovieAdmin = () => {
               date: "",
               time: "",
               location: "",
-              maxcount: ""
+              maxcount: "",
+              price:"",
+              img:""
             });
             setTableData(response.data);
 
@@ -197,7 +202,9 @@ const MovieAdmin = () => {
               date: "",
               time: "",
               location: "",
-              maxcount: ""
+              maxcount: "",
+              price:"",
+              img:""
             });
             setTableData(response.data);
 
@@ -265,6 +272,25 @@ const MovieAdmin = () => {
               value={data.maxcount || ""}
               placeholder="Max-Count" onChange={handleChange}
             />
+
+<TextField
+              name="price"
+              id="price"
+              label="price"
+              type='number'
+              value={data.price || ""}
+              placeholder="Ticket-Price" onChange={handleChange}
+            />
+
+<TextField
+              name="img"
+              id="img"
+              label="img"
+              value={data.img || ""}
+              placeholder="Image Url" onChange={handleChange}
+            />
+
+
             <Stack direction="row" spacing={4}>
               <Button variant="outlined" onClick={handleSubmit} >Register a Movie</Button>
               <Button variant="outlined" onClick={handleSubmitUpdate} >Update Movie Info</Button>

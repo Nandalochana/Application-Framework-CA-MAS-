@@ -16,7 +16,7 @@ async function addValues(req) {
   try {
     const movies = database.collection('Movies');
     const docs = [
-      { movieName: req.body.movieName, date: req.body.date, time: req.body.time, location: req.body.location, maxcount: req.body.maxcount }
+      { movieName: req.body.movieName, date: req.body.date, time: req.body.time, location: req.body.location, maxcount: req.body.maxcount,price: req.body.price,img: req.body.img }
     ];
     let results = await movies.find().toArray();
     return results;

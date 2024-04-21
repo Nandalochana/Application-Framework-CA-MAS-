@@ -24,6 +24,14 @@ body{
   box-shadow: 0 5px 10px rgba(0,0,0,0.3);
 }
 
+.search-container {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
 .table{
   position: absolute;
   top: 50%;

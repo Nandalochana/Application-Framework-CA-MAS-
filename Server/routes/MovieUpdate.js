@@ -17,7 +17,7 @@ async function addValues(req) {
     try {
         const movies = database.collection('Movies');
         console.log(req.body);
-        const updatedValues = await movies.updateOne({_id: new ObjectId(req.body.myId)}, { $set: {movieName: req.body.movieName, date: req.body.date, time: req.body.time, location: req.body.location, maxcount: req.body.maxcount}}) 
+        const updatedValues = await movies.updateOne({_id: new ObjectId(req.body.myId)}, { $set: {movieName: req.body.movieName, date: req.body.date, time: req.body.time, location: req.body.location, maxcount: req.body.maxcount,price: req.body.price,img: req.body.img}}) 
         // display the results of your operation
         console.log(updatedValues);
         let results = await movies.find().toArray();

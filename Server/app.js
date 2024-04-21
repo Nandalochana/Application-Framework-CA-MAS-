@@ -12,17 +12,20 @@ const movieAdd=require("./routes/MovieAdd")
 const movieLoad=require("./routes/MovieLoad") 
 const movieDelete = require("./routes/MovieDelete")
 const movieUpdate = require("./routes/MovieUpdate")
+const MovieFilter = require("./routes/MovieFilter")
 
 // Handling routes request 
 // Add a new document to the collection
 
 // Load the /posts routes
-app.post("/Login", loginroute);
+app.get("/Login", loginroute);
 app.post("/Signup", signuproute); 
 app.post("/MovieAdd", movieAdd); 
 app.post("/MovieLoad", movieLoad); 
 app.delete("/MovieDelete",movieDelete);
 app.put("/MovieUpdate",movieUpdate);
+app.post("/MovieFilter", MovieFilter); 
+
 
 //Creates our express server
 const port = 3000;

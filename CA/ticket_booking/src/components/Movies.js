@@ -4,7 +4,13 @@ import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import ButtonBase from '@mui/material/ButtonBase';
-import Divider from '@mui/material/Divider';
+import Stack from '@mui/material/Stack';
+import axios from 'axios';
+import { useState } from "react";
+import { useEffect } from 'react';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -13,7 +19,174 @@ const Img = styled('img')({
   maxHeight: '100%',
 });
 
-export default function ComplexGrid() {
+const Movie_Filter = () => {
+
+  const [filterValuesForGrid, setfilterValuesForGrid] = useState({
+    myId: "",
+    movieName: "",
+    date: "",
+    time: "",
+    location: "",
+    maxcount: "",
+    price: "",
+    img: ""
+  });
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setfilterValuesForGrid({
+      ...filterValuesForGrid,
+      [e.target.name]: value
+    });
+  };
+
+
+  const [data, setData] = useState({
+    myId: "",
+    movieName: "",
+    date: "",
+    time: "",
+    location: "",
+    maxcount: "",
+    price: "",
+    img: ""
+  });
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    movieLoad();
+  }, [])
+
+  async function movieLoad() {
+    const headers = {
+      "Content-Type": "application/json"
+    };
+
+    try {
+      console.log("9999999" + JSON.stringify(filterValuesForGrid))
+      await axios.post("http://localhost:3000/MovieFilter", filterValuesForGrid, { headers }).then((response) => {
+        if (response.status == 200) {
+          if (response.data != null) {
+            console.log(response.data);
+            setData(response.data);
+            setIsLoading(false);
+
+          }
+        }
+
+      });
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setIsLoading(false);
+
+    }
+  };
+
+  const SearchComponent = () => {
+    return (
+      <div>
+        <div className='search-container'>
+          <Box
+            component="form"
+            sx={{
+              '& .MuiTextField-root': { m: 1, width: '25ch' },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div>
+
+              <TextField
+                name="movieName"
+                id="moviename"
+                label="movieName"
+                value={filterValuesForGrid.movieName || ""}
+                placeholder="movieName" onChange={handleChange}
+              />
+
+              <TextField
+                name="date"
+                id="date"
+                value={filterValuesForGrid.date || ""}
+                type='date'
+                placeholder="Date" onChange={handleChange}
+              />
+
+              <TextField
+                name="time"
+                id="time"
+                value={filterValuesForGrid.time || ""}
+                type='time'
+                onChange={handleChange}
+              />
+
+              <TextField
+                name="location"
+                id="location"
+                label="location"
+                value={filterValuesForGrid.location || ""}
+                onChange={handleChange}
+              />
+
+              <TextField
+                name="maxcount"
+                id="maxcount"
+                label="maxcount"
+                type='number'
+                value={filterValuesForGrid.maxcount || ""}
+                placeholder="Max-Count" onChange={handleChange}
+              />
+
+              <TextField
+                name="price"
+                id="price"
+                label="price"
+                type='number'
+                value={filterValuesForGrid.price || ""}
+                placeholder="Ticket-Price" onChange={handleChange}
+              />
+
+              <Stack direction="row" spacing={4}>
+                <Button variant="outlined" onClick={movieLoad} >Seach</Button>
+              </Stack>
+
+            </div>
+          </Box>
+        </div>
+      </div>
+
+    );
+  }
+
+
+  const renderComponent = () => {
+    return data.map((item, index) => (
+      <MyRepeatedComponent key={index} item={item} />
+    ));
+  };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      <SearchComponent />
+      {renderComponent()}
+    </div>
+  );
+
+
+
+
+
+}
+
+
+
+const MyRepeatedComponent = ({ item }) => {
   return (
     <Paper
       sx={{
@@ -29,115 +202,45 @@ export default function ComplexGrid() {
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
             <a href='/movieinfo'>
-            <Img alt="complex" src="https://spotlightonline.co/wp-content/uploads/2017/03/cinema_projector-1024x683.jpg" />
+              <Img alt="complex" src={item.img} />
             </a>
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>
           <Grid item xs container direction="column" spacing={2}>
+
             <Grid item xs>
               <Typography gutterBottom variant="subtitle1" component="div">
-                Standard license
+                {item.movieName}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Full resolution 1920x1080 • JPEG
+                {item.date}- {item.time}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                ID: 1030114
+                {item.location}
               </Typography>
             </Grid>
             <Grid item>
               <Typography sx={{ cursor: 'pointer' }} variant="body2">
-              <a href='/movieinfo'>See Info</a>
+                <a href='/movieinfo?id='{...item._myId}>See Info</a>
               </Typography>
             </Grid>
           </Grid>
           <Grid item>
             <Typography variant="subtitle1" component="div">
-              $19.00
+              ${item.price}
             </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-      <Divider>---</Divider>
-
-
-      <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-          <a href='/movieinfo'>
-            <Img alt="complex" src="https://spotlightonline.co/wp-content/uploads/2017/03/cinema_projector-1024x683.jpg" />
-            </a>
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-           MovieInfo Comes Here
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                 Details Here
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1030114
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography sx={{ cursor: 'pointer' }} variant="body2">
-              <a href='/movieinfo'>See Info</a>
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
             <Typography variant="subtitle1" component="div">
-               Price : $19.00
+              Avaiable Count - {item.maxcount}
             </Typography>
           </Grid>
         </Grid>
       </Grid>
-
- <Divider>---</Divider>
-
-      <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-          <a href='/movieinfo'>
-            <Img alt="complex" src="https://spotlightonline.co/wp-content/uploads/2017/03/cinema_projector-1024x683.jpg" />
-            </a>
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Standard license
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                Full resolution 1920x1080 • JPEG
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1030114
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                <a href='/movieinfo'>See Info</a>
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $19.00
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-
-      <Divider></Divider>
-
     </Paper>
   );
+};
+
+
+export default function Comopnent_Movies() {
+  return (<div className="Comopnent_Movies"> <Movie_Filter /> </div>);
 }

@@ -7,22 +7,25 @@ var app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
-app.post("/Login", async function async (req, res) {
+app.get("/Login", async function async (req, res) {
   const results = await searchQuery(req);
   res.send(JSON.stringify(results)).status(200);
   });
 
  async function searchQuery(req){
         try {
+         
           const users = database.collection('User_Info');
            let results = await users.find().toArray();
            for(var item of results) {
-            if(item.email == req.body.email && item.password ==req.body.password){
-              console.log('if : ', [item._id]);
+            //console.log(req.query.email + ""+ req.query.password);
+            if(item.email.toLowerCase()  === req.query.email.toLowerCase()  && item.password.toLowerCase()  ===req.query.password.toLowerCase() ){
+              console.log('User Found : ', [item._id]);
               return item;
             }
             else{
-              console.log('else : ', [item._id]);
+              console.log(item.email + ""+ item.password);
+              //console.log('Not Matching : ', [item._id]);
             }
          }
          return "No values Found";
