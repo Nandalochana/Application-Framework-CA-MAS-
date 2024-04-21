@@ -14,8 +14,8 @@ app.post("/Login", async function async (req, res) {
 
  async function searchQuery(req){
         try {
-          const movies = database.collection('User_Info');
-           let results = await movies.find().toArray();
+          const users = database.collection('User_Info');
+           let results = await users.find().toArray();
            for(var item of results) {
             if(item.email == req.body.email && item.password ==req.body.password){
               console.log('if : ', [item._id]);
