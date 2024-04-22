@@ -19,7 +19,8 @@ const UserDelete = require("./routes/UserDelete")
 const UserUpdate = require("./routes/UserUpdate")
 const MovieInfoLoad = require("./routes/MovieInfoLoad")
 const BookTickets = require("./routes/BookTickets")
-
+const UserHistoryLoad = require("./routes/UserHistoryLoad")
+const UserHistoryDelete = require("./routes/UserHistoryDelete")
 // Handling routes request 
 // Add a new document to the collection
 
@@ -37,6 +38,8 @@ app.delete("/UserDelete", UserDelete);
 app.put("/UserUpdate", UserUpdate);
 app.get("/MovieInfoLoad", MovieInfoLoad);
 app.post("/BookTickets", BookTickets);
+app.get("/UserHistoryLoad", UserHistoryLoad);
+app.get("/UserHistoryDelete", UserHistoryDelete);
 
 
 //Creates our express server

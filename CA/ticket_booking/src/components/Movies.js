@@ -160,6 +160,7 @@ const Movie_Filter = () => {
               <Stack direction="row" spacing={4}>
                 <Button variant="outlined" onClick={movieLoad} >Seach</Button>
                 <Button variant="outlined" onClick={logOut} >Log-Out</Button>
+                <Button variant="outlined" href='/history' >Booking History</Button>
               </Stack>
 
             </div>

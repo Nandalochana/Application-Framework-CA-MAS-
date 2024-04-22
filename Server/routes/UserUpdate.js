@@ -9,11 +9,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.put("/UserUpdate", async function async(req, res) {
-    const results = await addValues(req);
+    const results = await userUpdate(req);
     res.send(JSON.stringify(results)).status(200);
 });
 
-async function addValues(req) {
+async function userUpdate(req) {
     try {
         const user = database.collection('User_Info');
         console.log(req.body);

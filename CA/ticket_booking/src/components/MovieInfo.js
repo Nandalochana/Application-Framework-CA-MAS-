@@ -87,6 +87,7 @@ function MovieInfo(props) {
     };
 
     try {
+      console.log(bookingData)
       await axios.post("http://localhost:3000/BookTickets", bookingData, { headers }).then((response) => {
         if (response.status == 200) {
           if (response.data != null) {

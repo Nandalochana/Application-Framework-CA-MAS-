@@ -8,15 +8,15 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.post("/UserAdd", async function async(req, res) {
-  const results = await addValues(req);
+  const results = await userAdd(req);
   res.send(JSON.stringify(results)).status(200);
 });
 
-async function addValues(req) {
+async function userAdd(req) {
   try {
     const user = database.collection('User_Info');
     const docs = [
-      { fullName: req.body.fullName, email: req.body.email, password: req.body.password, address: req.body.address,userType:req.body.userType}
+      { fullName: req.body.fullName, email: req.body.email, password: req.body.password, address: req.body.address, userType: req.body.userType }
     ];
     const updatedValues = await user.insertMany(docs);
     // display the results of your operation

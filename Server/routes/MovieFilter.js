@@ -8,11 +8,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.post("/MovieFilter", async function async(req, res) {
-    const results = await addValues(req);
+    const results = await movieFilter(req);
     res.send(JSON.stringify(results)).status(200);
 });
 
-async function addValues(req) {
+async function movieFilter(req) {
     try {
         const movies = database.collection('Movies');
         let results = await movies.find().toArray();

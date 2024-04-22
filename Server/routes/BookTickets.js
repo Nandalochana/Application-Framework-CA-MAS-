@@ -9,11 +9,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.post("/BookTickets", async function async(req, res) {
-    const results = await addValues(req);
+    const results = await bookTickets(req);
     res.send(JSON.stringify(results)).status(200);
 });
 
-async function addValues(req) {
+async function bookTickets(req) {
     try {
         const movies = database.collection('Movies');
         const movie = await movies.findOne({ _id: new ObjectId(req.body.movieId) })

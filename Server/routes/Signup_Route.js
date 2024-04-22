@@ -8,11 +8,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.post("/Signup", async function async (req, res) {
-  const results = await addValues(req);
+  const results = await signUp(req);
   res.send(JSON.stringify(results)).status(200);
   });
 
- async function addValues(req){
+ async function signUp(req){
         try {
           const users = database.collection('User_Info');
           const docs = [

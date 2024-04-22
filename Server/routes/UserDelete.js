@@ -9,11 +9,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.delete("/UserDelete", async function async(req, res) {
-    const results = await addValues(req);
+    const results = await userDelete(req);
     res.send(JSON.stringify(results)).status(200);
 });
 
-async function addValues(req) {
+async function userDelete(req) {
     try {
         const id = req.query.id;
         const user = database.collection('User_Info');

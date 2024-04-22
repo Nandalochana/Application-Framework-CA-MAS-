@@ -8,11 +8,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.post("/UserLoad", async function async(req, res) {
-  const results = await addValues(req);
+  const results = await userLoad(req);
   res.send(JSON.stringify(results)).status(200);
 });
 
-async function addValues(req) {
+async function userLoad(req) {
   try {
     const user = database.collection('User_Info');
     const docs = [

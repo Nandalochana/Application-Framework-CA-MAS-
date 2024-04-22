@@ -9,11 +9,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.put("/MovieUpdate", async function async(req, res) {
-    const results = await addValues(req);
+    const results = await movieUpdate(req);
     res.send(JSON.stringify(results)).status(200);
 });
 
-async function addValues(req) {
+async function movieUpdate(req) {
     try {
         const movies = database.collection('Movies');
         console.log(req.body);
