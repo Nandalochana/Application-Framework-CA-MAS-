@@ -9,11 +9,11 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 
 app.delete("/MovieDelete", async function async(req, res) {
-    const results = await addValues(req);
+    const results = await movieDelete(req);
     res.send(JSON.stringify(results)).status(200);
 });
 
-async function addValues(req) {
+async function movieDelete(req) {
     try {
         const id = req.query.id;
         const movies = database.collection('Movies');

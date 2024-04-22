@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import SvgIcon from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
+import Divider from '@mui/material/Divider';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -53,7 +54,7 @@ const Movie_Filter = () => {
   };
   const [isUser, setIsUser] = useState(true);
   const [isAdmin, setisAdmin] = useState(true);
-  
+
   const [data, setData] = useState({
     myId: "",
     _id: "",
@@ -65,7 +66,7 @@ const Movie_Filter = () => {
     price: "",
     img: "",
     color: "",
-    visible:""
+    visible: ""
   });
 
   const [isLoading, setIsLoading] = useState(true);
@@ -86,20 +87,20 @@ const Movie_Filter = () => {
           if (response.data != null) {
             console.log(response.data);
             setData(response.data);
-            if(userId =="" || userId==null){
+            if (userId == "" || userId == null) {
               setIsUser("none");
             }
-            else{
+            else {
               setIsUser("");
             }
-            console.log("userType:"+userType)
-            if(userType ==1){
+            console.log("userType:" + userType)
+            if (userType == 1) {
               setisAdmin("");
             }
-            else{
+            else {
               setisAdmin("none");
             }
-            
+
             setIsLoading(false);
           }
         }
@@ -132,7 +133,7 @@ const Movie_Filter = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:3000/whishlistAdjust", body, { headers });
+      const response = await axios.patch("http://localhost:3000/whishlistAdjust", body, { headers });
       if (response.status === 200) {
         console.log("Wishlist adjusted successfully");
         movieLoad()
@@ -210,7 +211,7 @@ const Movie_Filter = () => {
                 <Button variant="outlined" onClick={movieLoad} >Seach</Button>
                 <Button variant="outlined" onClick={logOut} style={{ display: isUser }}>Log-Out</Button>
                 <Button variant="outlined" href='/history' >Booking History</Button>
-                <Button variant="outlined" style={{ display: isAdmin  }} href='/user' >Managed User</Button>
+                <Button variant="outlined" style={{ display: isAdmin }} href='/user' >Managed User</Button>
                 <Button variant="outlined" style={{ display: isAdmin }} href='/admin' >Add/Update/Delete Movies</Button>
               </Stack>
 
@@ -225,7 +226,7 @@ const Movie_Filter = () => {
 
   const renderComponent = () => {
     return data.map((item, index) => (
-      <MyRepeatedComponent key={index} item={item} whishlistAdjust={whishlistAdjust}/>
+      <MyRepeatedComponent key={index} item={item} whishlistAdjust={whishlistAdjust} />
     ));
   };
 
@@ -243,7 +244,7 @@ const Movie_Filter = () => {
 }
 
 
-const MyRepeatedComponent = ({ item, whishlistAdjust  }) => {
+const MyRepeatedComponent = ({ item, whishlistAdjust }) => {
   return (
     <Paper
       sx={{
@@ -259,7 +260,7 @@ const MyRepeatedComponent = ({ item, whishlistAdjust  }) => {
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
             <a href={'/movieinfo?id=' + item._id}>
-              <Img alt="complex" src={item.img} />
+              <Img alt="complex" src={item.img}  width='100%' height='100%'/>
             </a>
           </ButtonBase>
         </Grid>
@@ -293,15 +294,16 @@ const MyRepeatedComponent = ({ item, whishlistAdjust  }) => {
           </Grid>
         </Grid>
         <div>
-        <Grid item>
-          <Tooltip title=" Wishlist">
-            <div style={{ display: item.visible }}>
-              <HomeIcon color={item.color} onClick={() => whishlistAdjust(item._id)} />
-            </div>
-          </Tooltip>
-        </Grid>
-      </div>
+          <Grid item>
+            <Tooltip title=" Wishlist">
+              <div style={{ display: item.visible }}>
+                <HomeIcon color={item.color} onClick={() => whishlistAdjust(item._id)} />
+              </div>
+            </Tooltip>
+          </Grid>
+        </div>
       </Grid>
+      <Divider />
     </Paper>
 
   );

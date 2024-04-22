@@ -42,7 +42,7 @@ app.get("/MovieInfoLoad", MovieInfoLoad);
 app.post("/BookTickets", BookTickets);
 app.get("/UserHistoryLoad", UserHistoryLoad);
 app.get("/UserHistoryDelete", UserHistoryDelete);
-app.post("/whishlistAdjust", whishListAdjust);
+app.patch("/whishlistAdjust", whishListAdjust);
 
 
 //Creates our express server
