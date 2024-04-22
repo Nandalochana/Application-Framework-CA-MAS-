@@ -14,7 +14,6 @@ app.get("/Login", async function async (req, res) {
 
  async function searchQuery(req){
         try {
-         
           const users = database.collection('User_Info');
            let results = await users.find().toArray();
            for(var item of results) {

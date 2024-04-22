@@ -11,9 +11,16 @@ import { Stack } from '@mui/material';
 
 const UserManagement = () => {
 
+  useEffect(() => {
+    const userLevel = window.sessionStorage.getItem("userType");
+    if(userLevel !=1){
+      window.location.href = "/movies";  
+    }
+  }, [])
+
+
   const columns = [
     { field: '_id', headerName: 'ID', width: 130,  hide: true, columnVisibilityModel: {
-      // Hide columns status and traderName, the other columns will remain visible
       status: false,
       traderName: false,
       hide: true
@@ -22,6 +29,7 @@ const UserManagement = () => {
     { field: 'email', headerName: 'Email', width: 130 },
     { field: 'password', headerName: 'Password', width: 130 },
     { field: 'address', headerName: 'address', width: 100 },
+    { field: 'userType', headerName: 'userType', width: 100 },
     {
       field: 'action',
       headerName: 'Action',
@@ -59,7 +67,8 @@ const UserManagement = () => {
               fullName: currentRow.fullName,
               email: currentRow.email,
               password: currentRow.password,
-              address: currentRow.address
+              address: currentRow.address,
+              userType:currentRow.userType
             });
 
 
@@ -89,7 +98,8 @@ const UserManagement = () => {
     fullName: "",
     email: "",
     password: "",
-    address: ""
+    address: "",
+    userType:""
   });
 
 
@@ -101,7 +111,8 @@ const UserManagement = () => {
     fullName: "",
     email: "",
     password: "",
-    address: ""
+    address: "",
+    userType:""
   });
 
   const handleChange = (e) => {
@@ -129,7 +140,8 @@ const UserManagement = () => {
               fullName: "",
               email: "",
               password: "",
-              address: ""
+              address: "",
+              userType:""
             });
             setTableData(response.data);
 
@@ -184,7 +196,8 @@ const UserManagement = () => {
               fullName: "",
               email: "",
               password: "",
-              address: ""
+              address: "",
+              userType:""
             });
             setTableData(response.data);
 
@@ -242,6 +255,13 @@ const UserManagement = () => {
               label="address"
               value={data.address || ""}
               onChange={handleChange}
+            />
+            <TextField
+              name="userType"
+              id="userType"
+              value={data.userType || ""}
+              type='number'
+              placeholder="userType" onChange={handleChange}
             />
 
             <Stack direction="row" spacing={4}>

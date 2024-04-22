@@ -83,6 +83,15 @@ const Movie_Filter = () => {
     }
   };
 
+
+  async function logOut() {
+    window.sessionStorage.removeItem("email");
+    window.sessionStorage.removeItem("userType");
+    window.location.href = "/login"; 
+  };
+
+
+
   const SearchComponent = () => {
     return (
       <div>
@@ -149,6 +158,7 @@ const Movie_Filter = () => {
 
               <Stack direction="row" spacing={4}>
                 <Button variant="outlined" onClick={movieLoad} >Seach</Button>
+                <Button variant="outlined" onClick={logOut} >Log-Out</Button>
               </Stack>
 
             </div>

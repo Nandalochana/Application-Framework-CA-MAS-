@@ -17,7 +17,7 @@ async function addValues(req) {
     try {
         const user = database.collection('User_Info');
         console.log(req.body);
-        const updatedValues = await user.updateOne({_id: new ObjectId(req.body.myId)}, { $set: {fullName: req.body.fullName, email: req.body.email, password: req.body.password, address: req.body.address}}) 
+        const updatedValues = await user.updateOne({_id: new ObjectId(req.body.myId)}, { $set: {fullName: req.body.fullName, email: req.body.email, password: req.body.password, address: req.body.address,userType:req.body.userType}}) 
         // display the results of your operation
         console.log(updatedValues);
         let results = await user.find().toArray();

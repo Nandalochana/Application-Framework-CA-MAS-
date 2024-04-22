@@ -16,7 +16,7 @@ async function addValues(req) {
   try {
     const user = database.collection('User_Info');
     const docs = [
-      { fullName: req.body.fullName, email: req.body.email, password: req.body.password, address: req.body.address}
+      { fullName: req.body.fullName, email: req.body.email, password: req.body.password, address: req.body.address,userType:req.body.userType}
     ];
     const updatedValues = await user.insertMany(docs);
     // display the results of your operation

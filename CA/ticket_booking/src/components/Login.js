@@ -5,9 +5,17 @@ import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
 import axios from 'axios';
 import { useState } from "react";
+import { useEffect } from 'react';
 
 
 const Login = () =>  {
+  useEffect(() => {
+    const email = window.sessionStorage.getItem("email");
+    if(email!=null && email.toLowerCase() !=""){
+      window.location.href = "/movies";  
+    }
+  }, [])
+
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -37,6 +45,7 @@ const Login = () =>  {
           if(response.data!=null){
               if(response.data.email!=null){
                 window.sessionStorage.setItem("email", response.data.email);
+                window.sessionStorage.setItem("userType", response.data.userType);
                 console.log(response.status, response.data.token,response);
                 window.location.href = "/movies"; 
               }

@@ -16,7 +16,7 @@ app.post("/Signup", async function async (req, res) {
         try {
           const users = database.collection('User_Info');
           const docs = [
-            {email: req.body.email, password: req.body.password, fullname: req.body.fullname, address: req.body.address}
+            {email: req.body.email, password: req.body.password, fullname: req.body.fullname, address: req.body.address,userType:2}
           ];
            const updatedValues = await users.insertMany(docs);
            // display the results of your operation

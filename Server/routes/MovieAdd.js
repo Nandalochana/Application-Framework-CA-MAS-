@@ -16,7 +16,7 @@ async function addValues(req) {
   try {
     const movies = database.collection('Movies');
     const docs = [
-      { movieName: req.body.movieName, date: req.body.date, time: req.body.time, location: req.body.location, maxcount: req.body.maxcount,price: req.body.price,img: req.body.img }
+      { movieName: req.body.movieName, date: req.body.date, time: req.body.time, location: req.body.location, maxcount: req.body.maxcount,price: req.body.price,img: req.body.img,info:req.body.info }
     ];
     const updatedValues = await movies.insertMany(docs);
     // display the results of your operation

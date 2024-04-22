@@ -12,12 +12,14 @@ import { Stack } from '@mui/material';
 const MovieAdmin = () => {
 
   const columns = [
-    { field: '_id', headerName: 'ID', width: 130,  hide: true, columnVisibilityModel: {
-      // Hide columns status and traderName, the other columns will remain visible
-      status: false,
-      traderName: false,
-      hide: true
-    }, },
+    {
+      field: '_id', headerName: 'ID', width: 130, hide: true, columnVisibilityModel: {
+        // Hide columns status and traderName, the other columns will remain visible
+        status: false,
+        traderName: false,
+        hide: true
+      },
+    },
     { field: 'movieName', headerName: 'Movie Name', width: 150 },
     { field: 'date', headerName: 'Date', width: 130 },
     { field: 'time', headerName: 'Time', width: 130 },
@@ -25,6 +27,7 @@ const MovieAdmin = () => {
     { field: 'location', headerName: 'Location', width: 100 },
     { field: 'price', headerName: 'Ticket-Price', width: 100 },
     { field: 'img', headerName: 'Cover Photo', width: 100 },
+    { field: 'info', headerName: 'Info', width: 200 },
     {
       field: 'action',
       headerName: 'Action',
@@ -64,8 +67,9 @@ const MovieAdmin = () => {
               time: currentRow.time,
               location: currentRow.location,
               maxcount: currentRow.maxcount,
-              price:currentRow.price,
-              img:currentRow.img
+              price: currentRow.price,
+              img: currentRow.img,
+              info: currentRow.info
             });
 
 
@@ -83,11 +87,17 @@ const MovieAdmin = () => {
         );
       },
     },
-   
+
   ];
 
   useEffect(() => {
-    movieLoad();
+    const userLevel = window.sessionStorage.getItem("userType");
+    if (userLevel != 1) {
+      window.location.href = "/movies";
+    }
+    else {
+      movieLoad();
+    }
   }, [])
 
   const [loadInfo, setInfo] = useState({
@@ -97,8 +107,9 @@ const MovieAdmin = () => {
     time: "",
     location: "",
     maxcount: "",
-    price:"",
-    img:""
+    price: "",
+    img: "",
+    info: ""
   });
 
 
@@ -112,8 +123,9 @@ const MovieAdmin = () => {
     time: "",
     location: "",
     maxcount: "",
-    price:"",
-    img:""
+    price: "",
+    img: "",
+    info: ""
   });
 
   const handleChange = (e) => {
@@ -143,8 +155,9 @@ const MovieAdmin = () => {
               time: "",
               location: "",
               maxcount: "",
-              price:"",
-              img:""
+              price: "",
+              img: "",
+              info: ""
             });
             setTableData(response.data);
 
@@ -201,8 +214,9 @@ const MovieAdmin = () => {
               time: "",
               location: "",
               maxcount: "",
-              price:"",
-              img:""
+              price: "",
+              img: "",
+              info: ""
             });
             setTableData(response.data);
 
@@ -271,7 +285,7 @@ const MovieAdmin = () => {
               placeholder="Max-Count" onChange={handleChange}
             />
 
-<TextField
+            <TextField
               name="price"
               id="price"
               label="price"
@@ -280,7 +294,7 @@ const MovieAdmin = () => {
               placeholder="Ticket-Price" onChange={handleChange}
             />
 
-<TextField
+            <TextField
               name="img"
               id="img"
               label="img"
@@ -288,7 +302,13 @@ const MovieAdmin = () => {
               placeholder="Image Url" onChange={handleChange}
             />
 
-
+            <TextField
+              name="info"
+              id="info"
+              label="info"
+              value={data.info || ""}
+              placeholder="Description" onChange={handleChange}
+            />
             <Stack direction="row" spacing={4}>
               <Button variant="outlined" onClick={handleSubmit} >Register a Movie</Button>
               <Button variant="outlined" onClick={handleSubmitUpdate} >Update Movie Info</Button>

@@ -5,10 +5,18 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import { useState } from "react";
 import axios from 'axios';
-import { useNavigate } from 'react-router'
+import { useEffect } from 'react';
 
 
 const Signup = () =>  {
+  useEffect(() => {
+    const email = window.sessionStorage.getItem("email");
+    if(email!=null && email.toLowerCase() !=""){
+      window.location.href = "/movies";  
+    }
+  }, [])
+
+
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -35,6 +43,8 @@ const Signup = () =>  {
         if(response.status == 200){
           if(response.data!=null){
                 console.log(response.status, response.data.token,response);
+                window.sessionStorage.setItem("email", response.data.email);
+                window.sessionStorage.setItem("userType", response.data.userType);
                 window.location.href = "/movies";
           }
         }

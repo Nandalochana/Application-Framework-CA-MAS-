@@ -7,13 +7,77 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useEffect } from 'react';
 import { useSearchParams } from "react-router-dom";
-
+import axios from 'axios';
+import { useState } from "react";
+import TextField from '@mui/material/TextField';
 
 
 function MovieInfo(props) {
   const [searchParams, setSearchParams] = useSearchParams()
   const id = searchParams.get('id');
- 
+  useEffect(() => {
+    const email = window.sessionStorage.getItem("email");
+    if (email == null) {
+      window.location.href = "/login";
+    }
+  }, [])
+
+  const [data, setData] = useState({
+    _id: "",
+    movieName: "",
+    date: "",
+    time: "",
+    location: "",
+    maxcount: "",
+    price: "",
+    img: "",
+    info: ""
+  });
+
+  const [isLoading, setIsLoading] = useState(true);
+
+
+
+  async function movieLoad() {
+    const headers = {
+      "Content-Type": "application/json"
+    };
+
+    try {
+      await axios.get("http://localhost:3000/MovieInfoLoad", {
+        params: {
+          id: id,
+
+        }
+      }, { headers }).then((response) => {
+        if (response.status == 200) {
+          if (response.data != null) {
+            setData(response.data);
+            setIsLoading(false);
+          }
+        }
+
+      });
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setIsLoading(false);
+
+    }
+  }
+
+  useEffect(() => {
+    movieLoad();
+    const userLevel = window.sessionStorage.getItem("userType");
+    if (userLevel != 1) {
+      //window.location.href = "/movies";
+    }
+    else {
+
+    }
+  }, [])
+
+
   return (
     <div className='container'>
       <Card sx={{ maxWidth: 500, alignSelf: 'center' }}>
@@ -23,20 +87,37 @@ function MovieInfo(props) {
           height="200"
           style={{ alignSelf: 'center' }}
           width={750}
-          image="https://spotlightonline.co/wp-content/uploads/2017/03/cinema_projector-1024x683.jpg"
+          image={data.img}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            MovieName Comes Heresss {id}
+            {data.movieName}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+            {data.info}
           </Typography>
+          <Typography variant="body3" color="text.secondary">
+            Ticket Price $- {data.price}
+            <br />
+          </Typography>
+          <Typography variant="body4" color="text.secondary">
+            Avaiable Count - {data.maxcount}
+            <br />
+          </Typography>
+          {data.location} - {data.time}
+          <br />
+
         </CardContent>
         <CardActions>
-          <Button size="small"><a href='/history'>Book ticket</a></Button>
-          <Button size="small"><a href='/admin'>Show Aditional Info</a></Button>
+          < TextField
+            name="count"
+            id="count"
+            label="count"
+            type='number'
+            placeholder="Book ticket Count"
+          />
+          <Button size="small"><a href='/history'>Book ticket  </a></Button>
+          <Button size="small"><a href='/movies'>Show Other Movies</a></Button>
         </CardActions>
       </Card>
     </div>

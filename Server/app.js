@@ -17,7 +17,7 @@ const UserAdd = require("./routes/UserAdd")
 const UserLoad = require("./routes/UserLoad")
 const UserDelete = require("./routes/UserDelete")
 const UserUpdate = require("./routes/UserUpdate")
-
+const MovieInfoLoad = require("./routes/MovieInfoLoad")
 
 // Handling routes request 
 // Add a new document to the collection
@@ -34,6 +34,8 @@ app.post("/UserAdd", UserAdd);
 app.post("/UserLoad", UserLoad);
 app.delete("/UserDelete", UserDelete);
 app.put("/UserUpdate", UserUpdate);
+app.get("/MovieInfoLoad", MovieInfoLoad);
+
 
 //Creates our express server
 const port = 3000;
