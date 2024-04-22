@@ -11,6 +11,9 @@ import { useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import SvgIcon from '@mui/material/SvgIcon';
+import Tooltip from '@mui/material/Tooltip';
+import { Hidden } from '@mui/material';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -19,8 +22,16 @@ const Img = styled('img')({
   maxHeight: '100%',
 });
 
-const Movie_Filter = () => {
+function HomeIcon(props) {
+  return (
+    <SvgIcon {...props}>
+      <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+    </SvgIcon>
+  );
+}
 
+const Movie_Filter = () => {
+  var userId = window.sessionStorage.getItem("userId");
   const [filterValuesForGrid, setfilterValuesForGrid] = useState({
     myId: "",
     movieName: "",
@@ -29,7 +40,8 @@ const Movie_Filter = () => {
     location: "",
     maxcount: "",
     price: "",
-    img: ""
+    img: "",
+    userId: userId
   });
 
   const handleChange = (e) => {
@@ -40,7 +52,6 @@ const Movie_Filter = () => {
     });
   };
 
-
   const [data, setData] = useState({
     myId: "",
     _id: "",
@@ -50,10 +61,13 @@ const Movie_Filter = () => {
     location: "",
     maxcount: "",
     price: "",
-    img: ""
+    img: "",
+    color: "",
+    visible:""
   });
 
   const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     movieLoad();
@@ -65,10 +79,10 @@ const Movie_Filter = () => {
     };
 
     try {
-      var value = window.sessionStorage.getItem("email");
       await axios.post("http://localhost:3000/MovieFilter", filterValuesForGrid, { headers }).then((response) => {
         if (response.status == 200) {
           if (response.data != null) {
+            console.log(response.data);
             setData(response.data);
             setIsLoading(false);
           }
@@ -91,7 +105,26 @@ const Movie_Filter = () => {
     window.location.href = "/login";
   };
 
+  async function whishlistAdjust(movieId) {
+    const headers = {
+      "Content-Type": "application/json"
+    };
 
+    const body = {
+      movieId,
+      userId
+    };
+
+    try {
+      const response = await axios.post("http://localhost:3000/whishlistAdjust", body, { headers });
+      if (response.status === 200) {
+        console.log("Wishlist adjusted successfully");
+        movieLoad()
+      }
+    } catch (error) {
+      console.error('Error adjusting wishlist:', error);
+    }
+  }
 
   const SearchComponent = () => {
     return (
@@ -174,7 +207,7 @@ const Movie_Filter = () => {
 
   const renderComponent = () => {
     return data.map((item, index) => (
-      <MyRepeatedComponent key={index} item={item} />
+      <MyRepeatedComponent key={index} item={item} whishlistAdjust={whishlistAdjust}/>
     ));
   };
 
@@ -188,15 +221,11 @@ const Movie_Filter = () => {
       {renderComponent()}
     </div>
   );
+
 }
 
 
-async function movieInfo(id) {
-
-};
-
-
-const MyRepeatedComponent = ({ item }) => {
+const MyRepeatedComponent = ({ item, whishlistAdjust  }) => {
   return (
     <Paper
       sx={{
@@ -245,10 +274,22 @@ const MyRepeatedComponent = ({ item }) => {
             </Typography>
           </Grid>
         </Grid>
+        <div>
+        <Grid item>
+          <Tooltip title=" Wishlist">
+            <div style={{ display: item.visible }}>
+              <HomeIcon color={item.color} onClick={() => whishlistAdjust(item._id)} />
+            </div>
+          </Tooltip>
+        </Grid>
+      </div>
       </Grid>
     </Paper>
+
   );
 };
+
+
 
 
 export default function Comopnent_Movies() {

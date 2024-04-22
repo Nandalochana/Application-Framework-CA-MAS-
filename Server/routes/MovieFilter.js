@@ -24,14 +24,14 @@ async function movieFilter(req) {
         for (var item of results) {
             if (req.body != null) {
                 if (req.body.movieName != "") {
-                    if (item.movieName!=null && item.movieName.toLowerCase() === req.body.movieName.toLowerCase()) {
-                      
+                    if (item.movieName != null && item.movieName.toLowerCase() === req.body.movieName.toLowerCase()) {
+
                         filterValues.push(item);
                     }
-                  
+
                 }
                 else {
-                  
+
                     filterValues.push(item);
                 }
             }
@@ -44,14 +44,14 @@ async function movieFilter(req) {
         for (var item of filterValues) {
             if (req.body != null) {
                 if (req.body.date != "") {
-                    if (item.date!=null && item.date.toLowerCase() === req.body.date.toLowerCase()) {
-                      
+                    if (item.date != null && item.date.toLowerCase() === req.body.date.toLowerCase()) {
+
                         datefilterValues.push(item);
                     }
-                  
+
                 }
                 else {
-                  
+
                     datefilterValues.push(item);
                 }
             }
@@ -63,14 +63,14 @@ async function movieFilter(req) {
         for (var item of datefilterValues) {
             if (req.body != null) {
                 if (req.body.time != "") {
-                    if (item.time!=null && item.time.toLowerCase() === req.body.time.toLowerCase()) {
-                      
+                    if (item.time != null && item.time.toLowerCase() === req.body.time.toLowerCase()) {
+
                         timefilterValues.push(item);
                     }
-                  
+
                 }
                 else {
-                  
+
                     timefilterValues.push(item);
                 }
             }
@@ -84,14 +84,14 @@ async function movieFilter(req) {
         for (var item of timefilterValues) {
             if (req.body != null) {
                 if (req.body.location != "") {
-                    if (item.location!=null && item.location.toLowerCase() === req.body.location.toLowerCase()) {
-                      
+                    if (item.location != null && item.location.toLowerCase() === req.body.location.toLowerCase()) {
+
                         locationfilterValues.push(item);
                     }
-                  
+
                 }
                 else {
-                  
+
                     locationfilterValues.push(item);
                 }
             }
@@ -100,19 +100,18 @@ async function movieFilter(req) {
             }
         }
 
-
         var maxfilterValues = [];
         for (var item of locationfilterValues) {
             if (req.body != null) {
                 if (req.body.maxcount != "") {
-                    if (item.maxcount!=null && item.maxcount.toLowerCase() === req.body.maxcount.toLowerCase()) {
-                      
+                    if (item.maxcount != null && item.maxcount.toLowerCase() === req.body.maxcount.toLowerCase()) {
+
                         maxfilterValues.push(item);
                     }
-                  
+
                 }
                 else {
-                  
+
                     maxfilterValues.push(item);
                 }
             }
@@ -121,19 +120,18 @@ async function movieFilter(req) {
             }
         }
 
-
         var pricefilterValues = [];
         for (var item of maxfilterValues) {
             if (req.body != null) {
                 if (req.body.price != "") {
-                    if (item.price!=null && item.price.toLowerCase() === req.body.price.toLowerCase()) {
-                      
+                    if (item.price != null && item.price.toLowerCase() === req.body.price.toLowerCase()) {
+
                         pricefilterValues.push(item);
                     }
-                  
+
                 }
                 else {
-                  
+
                     pricefilterValues.push(item);
                 }
             }
@@ -141,7 +139,45 @@ async function movieFilter(req) {
                 pricefilterValues.push(item);
             }
         }
-        return pricefilterValues;
+        var finalList = [];
+        const loggedUserId = req.body.userId;
+        const whishList = database.collection('WhishList');
+
+        for (var item of pricefilterValues) {
+            if (loggedUserId != null) {
+                const whishListRecord = await whishList.find().toArray();
+                var value = false;
+                for(var wish of whishListRecord) {
+                    console.log(JSON.stringify(whishListRecord));
+                    if(wish.movieId  == item._id  && wish.userId==loggedUserId ){
+                        value = true;
+                    }
+                     
+                 } 
+                 
+                 if (value) {
+                    item["color"] = "success";
+                    item["visible"] = "";
+                    finalList.push(item);
+                }
+                else {
+                    item["color"] = "disabled";
+                    item["visible"] = "";
+                    finalList.push(item);
+                }
+
+
+
+            }
+            else {
+                item["visible"] = "none";
+                item["color"] = "disabled";
+                finalList.push(item);
+            }
+        }
+
+
+        return finalList;
     }
     catch (error) {
         console.log(error);

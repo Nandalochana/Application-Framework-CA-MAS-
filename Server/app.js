@@ -21,6 +21,8 @@ const MovieInfoLoad = require("./routes/MovieInfoLoad")
 const BookTickets = require("./routes/BookTickets")
 const UserHistoryLoad = require("./routes/UserHistoryLoad")
 const UserHistoryDelete = require("./routes/UserHistoryDelete")
+const whishListAdjust = require("./routes/whishlistAdjust")
+
 // Handling routes request 
 // Add a new document to the collection
 
@@ -40,6 +42,7 @@ app.get("/MovieInfoLoad", MovieInfoLoad);
 app.post("/BookTickets", BookTickets);
 app.get("/UserHistoryLoad", UserHistoryLoad);
 app.get("/UserHistoryDelete", UserHistoryDelete);
+app.post("/whishlistAdjust", whishListAdjust);
 
 
 //Creates our express server
