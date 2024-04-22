@@ -15,11 +15,13 @@ import TextField from '@mui/material/TextField';
 function MovieInfo(props) {
   const [searchParams, setSearchParams] = useSearchParams()
   const id = searchParams.get('id');
+  const useremail = window.sessionStorage.getItem("email");
+  const userId = window.sessionStorage.getItem("userId");
   useEffect(() => {
-    const email = window.sessionStorage.getItem("email");
-    if (email == null) {
+    if (useremail == null) {
       window.location.href = "/login";
     }
+    else { movieLoad(); }
   }, [])
 
   const [data, setData] = useState({
@@ -35,8 +37,6 @@ function MovieInfo(props) {
   });
 
   const [isLoading, setIsLoading] = useState(true);
-
-
 
   async function movieLoad() {
     const headers = {
@@ -66,16 +66,47 @@ function MovieInfo(props) {
     }
   }
 
-  useEffect(() => {
-    movieLoad();
-    const userLevel = window.sessionStorage.getItem("userType");
-    if (userLevel != 1) {
-      //window.location.href = "/movies";
-    }
-    else {
+  const [bookingData, setbookingData] = useState({
+    movieId: id,
+    userId: userId,
+    email: useremail,
+    count: 0
+  });
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setbookingData({
+      ...bookingData,
+      [e.target.name]: value
+    });
+  };
+
+  async function bookTickets() {
+    const headers = {
+      "Content-Type": "application/json"
+    };
+
+    try {
+      await axios.post("http://localhost:3000/BookTickets", bookingData, { headers }).then((response) => {
+        if (response.status == 200) {
+          if (response.data != null) {
+            setData(response.data);
+            setbookingData({
+              ...bookingData,
+              count: 0,
+            });
+            setIsLoading(false);
+          }
+        }
+
+      });
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setIsLoading(false);
 
     }
-  }, [])
+  };
 
 
   return (
@@ -115,8 +146,10 @@ function MovieInfo(props) {
             label="count"
             type='number'
             placeholder="Book ticket Count"
+            value={bookingData.count || ""}
+            onChange={handleChange}
           />
-          <Button size="small"><a href='/history'>Book ticket  </a></Button>
+          <Button size="small" onClick={bookTickets} >Book ticket</Button>
           <Button size="small"><a href='/movies'>Show Other Movies</a></Button>
         </CardActions>
       </Card>

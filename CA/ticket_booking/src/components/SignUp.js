@@ -45,6 +45,7 @@ const Signup = () =>  {
                 console.log(response.status, response.data.token,response);
                 window.sessionStorage.setItem("email", response.data.email);
                 window.sessionStorage.setItem("userType", response.data.userType);
+                window.sessionStorage.setItem("userId", response.data._id);
                 window.location.href = "/movies";
           }
         }

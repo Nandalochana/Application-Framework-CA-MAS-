@@ -43,7 +43,7 @@ const Movie_Filter = () => {
 
   const [data, setData] = useState({
     myId: "",
-    _id:"",
+    _id: "",
     movieName: "",
     date: "",
     time: "",
@@ -87,7 +87,8 @@ const Movie_Filter = () => {
   async function logOut() {
     window.sessionStorage.removeItem("email");
     window.sessionStorage.removeItem("userType");
-    window.location.href = "/login"; 
+    window.sessionStorage.removeItem("userId");
+    window.location.href = "/login";
   };
 
 
@@ -190,7 +191,7 @@ const Movie_Filter = () => {
 
 
 async function movieInfo(id) {
-  
+
 };
 
 
@@ -209,7 +210,7 @@ const MyRepeatedComponent = ({ item }) => {
       <Grid container spacing={2}>
         <Grid item>
           <ButtonBase sx={{ width: 128, height: 128 }}>
-            <a href={'/movieinfo?id='+item._id}>
+            <a href={'/movieinfo?id=' + item._id}>
               <Img alt="complex" src={item.img} />
             </a>
           </ButtonBase>
@@ -230,7 +231,7 @@ const MyRepeatedComponent = ({ item }) => {
             </Grid>
             <Grid item>
               <Typography sx={{ cursor: 'pointer' }} variant="body2">
-                <a href={'/movieinfo?id='+item._id}>See Info</a>
+                <a href={'/movieinfo?id=' + item._id}>See Info</a>
               </Typography>
             </Grid>
           </Grid>

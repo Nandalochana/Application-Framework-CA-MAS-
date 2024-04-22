@@ -46,6 +46,7 @@ const Login = () =>  {
               if(response.data.email!=null){
                 window.sessionStorage.setItem("email", response.data.email);
                 window.sessionStorage.setItem("userType", response.data.userType);
+                window.sessionStorage.setItem("userId", response.data._id);
                 console.log(response.status, response.data.token,response);
                 window.location.href = "/movies"; 
               }
