@@ -1,6 +1,7 @@
 const { MongoClient } = require("mongodb");
 const uri = "mongodb://127.0.0.1:27017";
 const client = new MongoClient(uri);
+const { ObjectId } = require("mongodb");
 const database = client.db('moviebooking');
 var express=require("express") 
 var app = express()
@@ -20,10 +21,19 @@ app.post("/Signup", async function async (req, res) {
           ];
            const updatedValues = await users.insertMany(docs);
            // display the results of your operation
-           console.log(updatedValues.insertedIds[0]);       
-           
-           
-           return updatedValues.insertedIds[0];
+           let results = await users.find().toArray();
+           for(var item of results) {
+            //console.log(req.query.email + ""+ req.query.password);
+            if(item.email.toLowerCase()  === req.body.email.toLowerCase()  && item.password.toLowerCase()  ===req.body.password.toLowerCase() ){
+              console.log('User Found : ', [item._id]);
+              return item;
+            }
+            else{
+              console.log(item.email + ""+ item.password);
+              //console.log('Not Matching : ', [item._id]);
+            }
+         }  
+           return "Invalid Info";
         }
          finally {
           //await client.close();

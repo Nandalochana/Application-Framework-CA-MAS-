@@ -36,6 +36,7 @@ const MovieHistory = () => {
     };
 
     try {
+      console.log(userId);
       await axios.get("http://localhost:3000/UserHistoryLoad", {
         params: {
           id: userId,

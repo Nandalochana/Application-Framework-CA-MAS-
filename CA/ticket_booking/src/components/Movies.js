@@ -13,7 +13,6 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import SvgIcon from '@mui/material/SvgIcon';
 import Tooltip from '@mui/material/Tooltip';
-import { Hidden } from '@mui/material';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -32,6 +31,7 @@ function HomeIcon(props) {
 
 const Movie_Filter = () => {
   var userId = window.sessionStorage.getItem("userId");
+  var userType = window.sessionStorage.getItem("userType");
   const [filterValuesForGrid, setfilterValuesForGrid] = useState({
     myId: "",
     movieName: "",
@@ -51,7 +51,9 @@ const Movie_Filter = () => {
       [e.target.name]: value
     });
   };
-
+  const [isUser, setIsUser] = useState(true);
+  const [isAdmin, setisAdmin] = useState(true);
+  
   const [data, setData] = useState({
     myId: "",
     _id: "",
@@ -84,6 +86,20 @@ const Movie_Filter = () => {
           if (response.data != null) {
             console.log(response.data);
             setData(response.data);
+            if(userId =="" || userId==null){
+              setIsUser("none");
+            }
+            else{
+              setIsUser("");
+            }
+            console.log("userType:"+userType)
+            if(userType ==1){
+              setisAdmin("");
+            }
+            else{
+              setisAdmin("none");
+            }
+            
             setIsLoading(false);
           }
         }
@@ -192,8 +208,10 @@ const Movie_Filter = () => {
 
               <Stack direction="row" spacing={4}>
                 <Button variant="outlined" onClick={movieLoad} >Seach</Button>
-                <Button variant="outlined" onClick={logOut} >Log-Out</Button>
+                <Button variant="outlined" onClick={logOut} style={{ display: isUser }}>Log-Out</Button>
                 <Button variant="outlined" href='/history' >Booking History</Button>
+                <Button variant="outlined" style={{ display: isAdmin  }} href='/user' >Managed User</Button>
+                <Button variant="outlined" style={{ display: isAdmin }} href='/admin' >Add/Update/Delete Movies</Button>
               </Stack>
 
             </div>
