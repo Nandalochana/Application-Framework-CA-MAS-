@@ -7,12 +7,12 @@ import axios from 'axios';
 import { useState } from "react";
 import { useEffect } from 'react';
 
+const Login = () => {
 
-const Login = () =>  {
   useEffect(() => {
     const email = window.sessionStorage.getItem("email");
-    if(email!=null && email.toLowerCase() !=""){
-      window.location.href = "/movies";  
+    if (email != null && email.toLowerCase() != "") {
+      window.location.href = "/movies";
     }
   }, [])
 
@@ -31,33 +31,33 @@ const Login = () =>  {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-      const headers = {
-        "Content-Type": "application/json"
-      };
-      try {
-      await axios.get("http://localhost:3000/Login",{
+    const headers = {
+      "Content-Type": "application/json"
+    };
+    try {
+      await axios.get("http://localhost:3000/Login", {
         params: {
           email: data.email,
           password: data.password
         }
-      },{ headers } ).then((response) => {
-        if(response.status == 200){
-          if(response.data!=null){
-              if(response.data.email!=null){
-                window.sessionStorage.setItem("email", response.data.email);
-                window.sessionStorage.setItem("userType", response.data.userType);
-                window.sessionStorage.setItem("userId", response.data._id);
-                console.log(response.status, response.data.token,response);
-                window.location.href = "/movies"; 
-              }
+      }, { headers }).then((response) => {
+        if (response.status == 200) {
+          if (response.data != null) {
+            if (response.data.email != null) {
+              window.sessionStorage.setItem("email", response.data.email);
+              window.sessionStorage.setItem("userType", response.data.userType);
+              window.sessionStorage.setItem("userId", response.data._id);
+              console.log(response.status, response.data.token, response);
+              window.location.href = "/movies";
+            }
           }
         }
-       
+
       });
     } catch (error) {
       console.log(error);
     }
-    };;
+  };;
 
   return (
     <div>
@@ -65,32 +65,32 @@ const Login = () =>  {
         <div className='login form'>
           <header>Login Form</header>
           <Stack
-      component="form"
-      sx={{
-        width: '35ch',
-      }}
-      spacing={4}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField
-        hiddenLabel
-        id="filled-hidden-label-small"
-        placeholder="Username" name= "email"
-        variant="filled" onChange={handleChange}
-      />
-      <TextField
-        hiddenLabel
-        id="filled-hidden-label-normal"
-                type="password" name= "password"
-                placeholder="password" onChange={handleChange}
-        variant="filled"
-      />
-      <Button variant="outlined"  onClick={handleSubmit}>Log In</Button>
-      <Button variant="outlined"><a href='/signup'>Sign-up</a></Button>
-    </Stack>
+            component="form"
+            sx={{
+              width: '35ch',
+            }}
+            spacing={4}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              hiddenLabel
+              id="filled-hidden-label-small"
+              placeholder="Username" name="email"
+              variant="filled" onChange={handleChange}
+            />
+            <TextField
+              hiddenLabel
+              id="filled-hidden-label-normal"
+              type="password" name="password"
+              placeholder="password" onChange={handleChange}
+              variant="filled"
+            />
+            <Button variant="outlined" onClick={handleSubmit}>Log In</Button>
+            <Button variant="outlined"><a href='/signup'>Sign-up</a></Button>
+          </Stack>
         </div>
-        </div>
+      </div>
     </div>
   );
 }

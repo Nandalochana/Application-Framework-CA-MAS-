@@ -42,11 +42,12 @@ app.get("/MovieInfoLoad", MovieInfoLoad);
 app.post("/BookTickets", BookTickets);
 app.get("/UserHistoryLoad", UserHistoryLoad);
 app.get("/UserHistoryDelete", UserHistoryDelete);
-app.patch("/whishlistAdjust", whishListAdjust);
+app.patch("/whishlistAdjust",whishListAdjust);
 
 
 //Creates our express server
-const port = 3000;
+const port = process.env.PORT || 3000;
+
 app.set('port', port);
 
 
