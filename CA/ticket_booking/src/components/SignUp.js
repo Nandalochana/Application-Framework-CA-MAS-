@@ -74,7 +74,7 @@ const Signup = () =>  {
       <TextField id="outlined-basic"  name= "fullname" label="fullname" variant="outlined"  onChange={handleChange}/>
       <TextField id="outlined-basic" name= "email" label="email" variant="outlined" onChange={handleChange}/>
       <TextField id="filled-basic" name = "password" label="password"  type="password" variant="filled" onChange={handleChange} />
-      <TextField id="outlined-basic" name = "address" label="address" variant="outlined" onChange={handleChange}/>
+      <TextField id="outlined-basic" name = "address" label="location" variant="outlined" onChange={handleChange}/>
       <Button variant="outlined"><a href='/Login'>Login</a></Button>
       <Button variant="outlined" onClick={handleSubmit}>Sign-up</Button>
     </Box>
